@@ -23,10 +23,10 @@ public class MainActivity extends Activity {
 	private BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 	private BluetoothSocket mBluetoothSocket;
 	private OutputStream outStream;
-	private ArrayList<String> names;
-	private ArrayList<String> addresses;
-	private BTInfoAdapter mAdapter = new BTInfoAdapter(this, names, addresses);
-	private IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+	private ArrayList<String> names = new ArrayList<String>();
+	private ArrayList<String> addresses = new ArrayList<String>();
+	private BTInfoAdapter mAdapter;
+	private IntentFilter filter;
 	private ListView mListView;
 	
 	private static final int REQUEST_ENABLE_BT = 1;
@@ -38,12 +38,19 @@ public class MainActivity extends Activity {
 			String action = intent.getAction();
 			// When discovery finds a device
 			if(BluetoothDevice.ACTION_FOUND.equals(action)){
+				System.out.println("Found device.");
 				// get the BluetoothDevice object from the intent
 				BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
 				// add the name and address to an array adapter to show in a ListView
-				names.add(device.getName());
-				addresses.add(device.getAddress());
-				mAdapter.updateAdapter(names, addresses);
+				if(device != null){
+					if(device.getName() != null && device.getName().length() > 0) {
+						names.add(device.getName());
+						System.out.println(device.getName());
+					}
+					addresses.add(device.getAddress());
+					System.out.println(device.getAddress());
+					mAdapter.updateAdapter(names, addresses);
+				}
 			}
 		}
 	};
@@ -52,6 +59,9 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		mAdapter = new BTInfoAdapter(this, names, addresses);
+		filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
 		
 		mListView = (ListView) findViewById(R.id.list_view);
 		mListView.setAdapter(mAdapter);

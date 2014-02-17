@@ -36,7 +36,7 @@ public class BTInfoAdapter extends BaseAdapter {
 	
 	@Override
 	public int getCount() {
-		return AddressList.size();
+		return (AddressList == null) ? 0 : AddressList.size();
 	}
 
 	@Override
