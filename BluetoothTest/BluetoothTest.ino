@@ -15,8 +15,8 @@ void setupBlueToothConnection()
 {
     Serial.print("Setting up Bluetooth link");  
     blueToothSerial.begin(38400); //Set BluetoothBee BaudRate to default baud rate 38400
-    /*delay(1000);
-    sendBlueToothCommand("\r\n+STWMOD=0\r\n");
+    delay(1000);
+    /*sendBlueToothCommand("\r\n+STWMOD=1\r\n");
     sendBlueToothCommand("\r\n+STNA=ArduinoBluetooth\r\n");
     sendBlueToothCommand("\r\n+STAUTO=1\r\n");
     sendBlueToothCommand("\r\n+STOAUT=1\r\n");
@@ -78,5 +78,6 @@ void sendBlueToothCommand(char command[])
 {
     Serial.print(command);
     blueToothSerial.print(command);
+    delay(3000);
     CheckOK();   
 }
