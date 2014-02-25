@@ -1,8 +1,11 @@
 #include <Servo.h>
+#include <PlainProtocol.h>
 
 Servo mServo;
+PlainProtocol comm(Serial, 115200);
 
 void setup() {
+    comm.init();
     Serial.begin(115200);               //initial the Serial
     
     mServo.attach(5);
@@ -10,29 +13,17 @@ void setup() {
 
 void loop()
 {
-    if(Serial.available())
-    {
-        char command[128];  
-        char buf;
-        int index = 0;
-        int pos = 0;
-        
-        while(true){
-          buf = Serial.read();
-          if(buf == ';')
-            break;
-          command[index] = buf;
-          ++index;
-        }
-        //command[index]='\0';
-        --index;
-        
-        for(int i = 0; i < index; ++i){
-          pos += (command[index-i]-'0')*(int)pow(10,i);
-        }
-        
-        mServo.write(pos);
-        Serial.write("Servo to position ");
+  if(Serial.available())
+  {
+    if(comm.receiveFrame()){
+      if(comm.receivedCommand == "position"){
+        mServo.write(comm.receivedContent[0]);
+        Serial.println("<success>;");
+      }
+      else{
+        Serial.println("command not available"); 
+      }
     }
+  }
 }
 
