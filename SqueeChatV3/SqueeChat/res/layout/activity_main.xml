@@ -1,0 +1,68 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity" >
+
+    <Button
+        android:id="@+id/bBlue"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="Scan" />
+
+    <com.trem.squeechat.MyGLSurfaceView
+        android:id="@+id/meter"
+        android:layout_width="175sp"
+        android:layout_height="350sp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true" />
+
+    <TextView
+        android:id="@+id/HardTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/meter"
+        android:layout_marginRight="20dp"
+        android:layout_toLeftOf="@+id/meter"
+        android:text="Hard"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#FF0000" />
+
+    <TextView
+        android:id="@+id/MediumTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/HardTV"
+        android:layout_below="@+id/HardTV"
+        android:layout_marginTop="80sp"
+        android:text="Medium"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#FFAA00" />
+
+    <TextView
+        android:id="@+id/SoftTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/MediumTV"
+        android:layout_below="@+id/MediumTV"
+        android:layout_marginTop="80sp"
+        android:text="Soft"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#AAFF00" />
+
+    <TextView
+        android:id="@+id/tvForce"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/meter"
+        android:layout_alignBottom="@+id/meter"
+        android:layout_toLeftOf="@+id/HardTV"
+        android:text="Force is " />
+
+</RelativeLayout>
