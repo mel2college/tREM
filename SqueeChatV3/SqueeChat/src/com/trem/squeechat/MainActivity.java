@@ -1,6 +1,7 @@
 package com.trem.squeechat;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,14 +18,18 @@ public class MainActivity extends BlunoLibrary {
 	MyGLSurfaceView meter;
 	int force = 0;
 	String buffer = new String();
-    //--------------------------------------------------------------------------------------------------
-	String[] tokens;
-	//private Object lock = new Object();
-    //--------------------------------------------------------------------------------------------------
+	private Handler mHandler = new Handler();
+
+    private Runnable forceTask = new Runnable() {
+        @Override
+        public void run() {
+            serialSend("<force>;");
+        }
+    };
 	
 
-	    @Override
-	    protected void onCreate(Bundle savedInstanceState) {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
@@ -60,41 +65,7 @@ public class MainActivity extends BlunoLibrary {
 			}
 
 		});
-       /*//-------------------------------------------------------------------------------------------------- 
-        class Worker implements Runnable {
-
-			@Override
-			public void run() {
-				synchronized (lock) {
-					System.out.println("HELLO!!");
-					if (!buffer.isEmpty() && (buffer.length() > 2)) {
-						  System.out.println("HEL2LO!!2");
-						if (buffer.substring(buffer.length()-2, buffer.length()-1).equals("\r\n")) {
-							System.out.println("HE3LLO!!3");
-							tokens = buffer.split("\r\n");
-							
-							for (String t : tokens) {
-								try	{      
-									  force = Integer.parseInt(t);
-									  System.out.println("Force equals " + force);
-									}
-									catch (NumberFormatException nfe)
-									{
-									  System.out.println("NumberFormatException: " + nfe.getMessage());
-									}
-							}
-						}
-						tvForce.setText("force is " + force);
-					}
-				}
-			}
-        	
-        }
         
-        Worker w = new Worker();
-        Thread t = new Thread(w);
-        t.start();
-        //--------------------------------------------------------------------------------------------------*/   
         bBlue.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -139,6 +110,7 @@ public class MainActivity extends BlunoLibrary {
 		switch(theConnectionState) {
 		case isConnected:
 			bBlue.setText("Connected");
+			mHandler.post(forceTask);
 			break;
 		case isConnecting:
 			bBlue.setText("Connecting");
@@ -156,41 +128,35 @@ public class MainActivity extends BlunoLibrary {
 
 	@Override
 	public void onSerialReceived(String theString) {
-		// TODO parse the incoming force
-		
-	       //--------------------------------------------------------------------------------------------------
-		//synchronized (lock) {
-			if (theString != null) {
-				buffer += theString;
-				
-				tokens = buffer.split("\r\n");
-				
-				for (int i = 0; i < tokens.length; i++ ) {
-					if (i == (tokens.length -1) ) {
-						if (!buffer.substring(buffer.length()-2, buffer.length()-1).equals("\r\n")){
-							buffer = tokens[i];
-						}
-						else {
-							buffer = "";
-						}
+		String[] tokens;
+		System.out.println("i am here 1");
+		if (theString != null) {
+			buffer += theString;
+			System.out.println("i am here 2");
+			System.out.println("Current Buffer: " + buffer);
+			tokens = buffer.split("\r\n");
+			
+			for (int i = 0; i < tokens.length; i++ ) {
+				if (i == (tokens.length -1)) {
+					if (buffer.substring(buffer.length()-2, buffer.length()).equals("\r\n")){
+						buffer = "";
 					}
 					else {
-						try	{      
-							force = Integer.parseInt(tokens[i]);
-							tvForce.setText("force is " + force);
-							System.out.println("Force equals " + force);
-						}
-						catch (NumberFormatException nfe) {
-							System.out.println("NumberFormatException: " + nfe.getMessage());
-						}
+						buffer = tokens[i];
+						break;
 					}
 				}
-				
-			}
-			//System.out.println("Force equals " + force);
-		//}
-	       //--------------------------------------------------------------------------------------------------
-		
+				try	{
+					System.out.println("i am here 3");
+					force = Integer.parseInt(tokens[i]);
+					tvForce.setText("force is " + force);
+					System.out.println("Force equals " + force);
+				}
+				catch (NumberFormatException nfe) {
+					System.out.println("NumberFormatException: " + nfe.getMessage());
+				}
+			}	
+		}
+		mHandler.postDelayed(forceTask,200);
 	}
-
 }

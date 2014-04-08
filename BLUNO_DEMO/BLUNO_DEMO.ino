@@ -46,12 +46,11 @@ void loop()
         mServo.write(0);
         servo_position = 0;
       }
-      else{
-        //Serial.println("command not available"); 
+      else if(comm.receivedCommand == "force") {
+        int force = analogRead(A0);
+        Serial.println(String(force) + ";");
       }
     }
-    int force = analogRead(A0);
-    Serial.println(String(force));
   }
 }
 
