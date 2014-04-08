@@ -48,7 +48,7 @@ void loop()
       }
       else if(comm.receivedCommand == "force") {
         int force = analogRead(A0);
-        Serial.println(String(force) + ";");
+        Serial.println(String(force));
       }
     }
   }
