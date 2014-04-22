@@ -1,0 +1,97 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity" >
+
+    <com.trem.squeechat.MyGLSurfaceView
+        android:id="@+id/meter"
+        android:layout_width="150sp"
+        android:layout_height="350sp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true" />
+
+    <TextView
+        android:id="@+id/tvForce"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/tvForceTitle"
+        android:layout_below="@+id/tvForceTitle"
+        android:layout_marginRight="16dp"
+        android:text="0"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/SoftTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/MediumTV"
+        android:layout_marginTop="91dp"
+        android:layout_toLeftOf="@+id/meter"
+        android:text="@string/str0"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#AAFF00" />
+
+    <TextView
+        android:id="@+id/MediumTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/HardTV"
+        android:layout_marginTop="91dp"
+        android:layout_toLeftOf="@+id/meter"
+        android:text="@string/str1"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#FFAA00" />
+
+    <TextView
+        android:id="@+id/HardTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="127dp"
+        android:layout_toLeftOf="@+id/meter"
+        android:text="@string/str2"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#FF0000" />
+
+    <TextView
+        android:id="@+id/BlueTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/blue"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Button
+        android:id="@+id/bBlue"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/meter"
+        android:layout_below="@+id/BlueTV"
+        android:text="@string/scan" />
+
+    <TextView
+        android:id="@+id/tvForceTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/MediumTV"
+        android:layout_alignBottom="@+id/MediumTV"
+        android:layout_toLeftOf="@+id/BlueTV"
+        android:text="@string/force"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Button
+        android:id="@+id/bCalibrate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvForce"
+        android:layout_alignLeft="@+id/bBlue"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/calibrate" />
+
+</RelativeLayout>
